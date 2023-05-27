@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tintinnabuli Melody Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 20px;
+    }
+
+    h1 {
+      margin-top: 30px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+      margin: 20px;
+    }
+
+    #melodyDisplay {
+      margin-top: 50px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    #durationSlider {
+      width: 300px;
+      margin: 20px auto;
+    }
+
+    #durationValue {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    #rootNoteSelect {
+      margin-top: 20px;
+    }
+
+    #scaleSelect {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Tintinnabuli Melody Generator</h1>
+  <button id="generateButton">Generate Melody</button>
+  <div id="melodyDisplay"></div>
+  <input type="range" id="durationSlider" min="0.2" max="10" step="0.1" value="0.4">
+  <div id="durationValue">Duration: 0.4 seconds</div>
+  <div>
+    <label for="rootNoteSelect">Root Note:</label>
+    <select id="rootNoteSelect">
+      <option value="C">C</option>
+      <option value="C#">C#</option>
+      <option value="Db">Db</option>
+      <option value="D">D</option>
+      <option value="D#">D#</option>
+      <option value="Eb">Eb</option>
+      <option value="E">E</option>
+      <option value="F">F</option>
+      <option value="F#">F#</option>
+      <option value="Gb">Gb</option>
+      <option value="G">G</option>
+      <option value="G#">G#</option>
+      <option value="Ab">Ab</option>
+      <option value="A">A</option>
+      <option value="A#">A#</option>
+      <option value="Bb">Bb</option>
+      <option value="B">B</option>
+    </select>
+  </div>
+  <div>
+    <label for="scaleSelect">Scale:</label>
+    <select id="scaleSelect">
+      <option value="major">Major</option>
+      <option value="minor">Minor</option>
+      <option value="dorian">Dorian</option>
+      <option value="lydian">Lydian</option>
+      <option value="mixolydian">Mixolydian</option>
+      <option value="phrygian">Phrygian</option>
+      <option value="pentatonic">Pentatonic</option>
+    </select>
+  </div>
+  <button id="replayButton" disabled>Replay Melody</button>
+
+  <script>
+    let melody = []; // Global variable to store the generated melody
+    let rootNote = "C"; // Default root note
+    let scaleType = "major"; // Default scale type
+
+    // Function to generate a random note within the selected scale based on the tonic note
+    function getRandomNote() {
+      const majorScaleIntervals = [0, 2, 4, 5, 7, 9, 11];
+      const minorScaleIntervals = [0, 2, 3, 5, 7, 8, 10];
+      const dorianScaleIntervals = [0, 2, 3, 5, 7, 9, 10];
+      const lydianScaleIntervals = [0, 2, 4, 6, 7, 9, 11];
+      const mixolydianScaleIntervals = [0, 2, 4, 5, 7, 9, 10];
+      const phrygianScaleIntervals = [0, 1, 3, 5, 7, 8, 10];
+      const pentatonicScaleIntervals = [0, 2, 4, 7, 9];
+
+      let scaleIntervals;
+
+      switch (scaleType) {
+        case "major":
+          scaleIntervals = majorScaleIntervals;
+          break;
+        case "minor":
+          scaleIntervals = minorScaleIntervals;
+          break;
+        case "dorian":
+          scaleIntervals = dorianScaleIntervals;
+          break;
+        case "lydian":
+          scaleIntervals = lydianScaleIntervals;
+          break;
+        case "mixolydian":
+          scaleIntervals = mixolydianScaleIntervals;
+          break;
+        case "phrygian":
+          scaleIntervals = phrygianScaleIntervals;
+          break;
+        case "pentatonic":
+          scaleIntervals = pentatonicScaleIntervals;
+          break;
+        default:
+          scaleIntervals = majorScaleIntervals;
+      }
+
+      const tonicIndex = scaleIntervals[0] + noteToIndex(rootNote); // Tonic note index in the selected scale
+      const randomIndex = scaleIntervals[Math.floor(Math.random() * scaleIntervals.length)]; // Random index within the selected scale intervals
+      const noteIndex = (tonicIndex + randomIndex) % 12; // Adjust the index within the 12-note range
+      return indexToNote(noteIndex);
+    }
+
+    // Function to convert a note to its corresponding index (C: 0, C#: 1, D: 2, and so on)
+    function noteToIndex(note) {
+      const noteMap = {
+        "C": 0,
+        "C#": 1,
+        "Db": 1,
+        "D": 2,
+        "D#": 3,
+        "Eb": 3,
+        "E": 4,
+        "F": 5,
+        "F#": 6,
+        "Gb": 6,
+        "G": 7,
+        "G#": 8,
+        "Ab": 8,
+        "A": 9,
+        "A#": 10,
+        "Bb": 10,
+        "B": 11
+      };
+      return noteMap[note];
+    }
+
+    // Function to convert an index to its corresponding note (0: C, 1: C#, 2: D, and so on)
+    function indexToNote(index) {
+      const indexMap = {
+        0: "C",
+        1: "C#",
+        2: "D",
+        3: "D#",
+        4: "E",
+        5: "F",
+        6: "F#",
+        7: "G",
+        8: "G#",
+        9: "A",
+        10: "A#",
+        11: "B"
+      };
+      return indexMap[index];
+    }
+
+    // Function to generate a melody based on the tintinnabuli method
+    function generateMelody() {
+      const melodyLength = 8; // Number of notes in the melody
+      let generatedMelody = [];
+      for (let i = 0; i < melodyLength; i++) {
+        const melodyNote = getRandomNote();
+        const tonicNote = getRandomNote();
+        generatedMelody.push({ melodyNote, tonicNote });
+      }
+      return generatedMelody;
+    }
+
+    // Function to play the generated melody
+    function playMelody() {
+      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+      const leftHand = audioContext.createGain();
+      const rightHand = audioContext.createGain();
+
+      leftHand.connect(audioContext.destination);
+      rightHand.connect(audioContext.destination);
+
+      const durationSlider = document.getElementById("durationSlider");
+      const noteDuration = parseFloat(durationSlider.value);
+
+      melody.forEach((note, index) => {
+        const startTime = index * noteDuration; // Delay each note by the specified duration
+
+        const leftOscillator = audioContext.createOscillator();
+        leftOscillator.type = "triangle";
+        leftOscillator.frequency.value = noteToFrequency(note.melodyNote) / 2; // Lower the frequency of left hand notes by one octave
+        leftOscillator.connect(leftHand);
+
+        const rightOscillator = audioContext.createOscillator();
+        rightOscillator.type = "triangle";
+        rightOscillator.frequency.value = noteToFrequency(note.tonicNote);
+        rightOscillator.connect(rightHand);
+
+        leftOscillator.start(startTime);
+        leftOscillator.stop(startTime + noteDuration); // Play each note for the specified duration
+
+        rightOscillator.start(startTime);
+        rightOscillator.stop(startTime + noteDuration); // Play each note for the specified duration
+      });
+
+      // Adjust the gain values to control volume
+      leftHand.gain.value = 0.3; // Adjust this value to control the volume of the left hand notes
+      rightHand.gain.value = 0.3; // Adjust this value to control the volume of the right hand notes
+    }
+
+    // Function to convert a note to its corresponding frequency
+    function noteToFrequency(note) {
+      const noteMap = {
+        "C": 261.63,
+        "C#": 277.18,
+        "Db": 277.18,
+        "D": 293.66,
+        "D#": 311.13,
+        "Eb": 311.13,
+        "E": 329.63,
+        "F": 349.23,
+        "F#": 369.99,
+        "Gb": 369.99,
+        "G": 392.00,
+        "G#": 415.30,
+        "Ab": 415.30,
+        "A": 440.00,
+        "A#": 466.16,
+        "Bb": 466.16,
+        "B": 493.88
+      };
+      return noteMap[note];
+    }
+
+    // Function to display the generated melody on the webpage and play it
+    function displayMelody() {
+      const melodyDisplay = document.getElementById("melodyDisplay");
+      rootNote = document.getElementById("rootNoteSelect").value;
+      scaleType = document.getElementById("scaleSelect").value;
+      melody = generateMelody();
+      melodyDisplay.textContent = melody.map(note => note.melodyNote + (note.tonicNote ? "(" + note.tonicNote + ")" : "") + " ").join("");
+      document.getElementById("replayButton").disabled = false;
+      playMelody();
+    }
+
+    // Function to replay the generated melody
+    function replayMelody() {
+      if (melody.length > 0) {
+        playMelody();
+      }
+    }
+
+    // Function to update the duration value display
+    function updateDurationValue() {
+      const durationSlider = document.getElementById("durationSlider");
+      const durationValue = document.getElementById("durationValue");
+      const duration = parseFloat(durationSlider.value).toFixed(1);
+      durationValue.textContent = `Duration: ${duration} seconds`;
+    }
+
+    // Event listener for the generate button
+    const generateButton = document.getElementById("generateButton");
+    generateButton.addEventListener("click", displayMelody);
+
+    // Event listener for the replay button
+    const replayButton = document.getElementById("replayButton");
+    replayButton.addEventListener("click", replayMelody);
+
+    // Event listener for the duration slider
+    const durationSlider = document.getElementById("durationSlider");
+    durationSlider.addEventListener("input", updateDurationValue);
+  </script>
+</body>
+</html>
