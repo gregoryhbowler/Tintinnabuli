@@ -1,584 +1,670 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Tintinnabuli Melody Generator</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
-  <style>
-        body {
-      background-color: #5C5BEE;
-      font-family: 'Cormorant Garamond', serif;
-      text-align: center;
-      font-weight: 300;
-      margin: 20px;
-      color: #ffffff;
-    }
-
-    h1 {
-      margin-top: 30px;
-      font-size: 7vw;
-      font-weight: 300;
-      margin: 0vw 13vw;
-      letter-spacing: -.03rem;
-      line-height: 100%;
-    }
-
-    button {
-      padding: 10px 20px;
-      font-size: 24px;
-      margin: 20px;
-      background-color: #A9AD93;
-      color: #000000;
-      border: none;
-      border-radius: 30px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      font-family: 'Cormorant Garamond', serif;      
-    }
-
-    button:hover {
-      color: #A9AD93;
-    }
-
-    #melodyDisplay {
-      margin-top: 20px;
-      font-size: 40px;
-      font-weight: bold;
-      background: #C0C1FF;
-      border-radius: 80px;
-      color: #303030;
-      padding: 20px 30px;
-    }
-
-  #durationSlider {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  width: 50%;
-  margin: 50px auto;
-}
-
-.range {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 200px;
-  margin-top: 10px;
-  transform: translate(-50%, -50%);
-}
-
-input[type=range]::-webkit-slider-runnable-track {
-  -webkit-appearance: none;
-  background: rgba(59,173,227,1);
-  background: -moz-linear-gradient(45deg, rgba(59,173,227,1) 0%, rgba(87,111,230,1) 25%, rgba(152,68,183,1) 51%, rgba(255,53,127,1) 100%);
-  background: -webkit-gradient(left bottom, right top, color-stop(0%, rgba(59,173,227,1)), color-stop(25%, rgba(87,111,230,1)), color-stop(51%, rgba(152,68,183,1)), color-stop(100%, rgba(255,53,127,1)));
-  background: -webkit-linear-gradient(45deg, rgba(59,173,227,1) 0%, rgba(87,111,230,1) 25%, rgba(152,68,183,1) 51%, rgba(255,53,127,1) 100%);
-  background: -o-linear-gradient(45deg, rgba(59,173,227,1) 0%, rgba(87,111,230,1) 25%, rgba(152,68,183,1) 51%, rgba(255,53,127,1) 100%);
-  background: -ms-linear-gradient(45deg, rgba(59,173,227,1) 0%, rgba(87,111,230,1) 25%, rgba(152,68,183,1) 51%, rgba(255,53,127,1) 100%);
-  background: linear-gradient(45deg, rgba(59,173,227,1) 0%, rgba(87,111,230,1) 25%, rgba(152,68,183,1) 51%, rgba(255,53,127,1) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3bade3 ', endColorstr='#ff357f ', GradientType=1 );
-  height: 2px;
-}
-
-input[type=range]:focus {
-  outline: none;
-}
-
-input[type=range]::-moz-range-track {
-  -moz-appearance: none;
-  background: rgba(59,173,227,1);
-  background: -moz-linear-gradient(45deg, rgba(59,173,227,1) 0%, rgba(87,111,230,1) 25%, rgba(152,68,183,1) 51%, rgba(255,53,127,1) 100%);
-  background: -webkit-gradient(left bottom, right top, color-stop(0%, rgba(59,173,227,1)), color-stop(25%, rgba(87,111,230,1)), color-stop(51%, rgba(152,68,183,1)), color-stop(100%, rgba(255,53,127,1)));
-  background: -webkit-linear-gradient(45deg, rgba(59,173,227,1) 0%, rgba(87,111,230,1) 25%, rgba(152,68,183,1) 51%, rgba(255,53,127,1) 100%);
-  background: -o-linear-gradient(45deg, rgba(59,173,227,1) 0%, rgba(87,111,230,1) 25%, rgba(152,68,183,1) 51%, rgba(255,53,127,1) 100%);
-  background: -ms-linear-gradient(45deg, rgba(59,173,227,1) 0%, rgba(87,111,230,1) 25%, rgba(152,68,183,1) 51%, rgba(255,53,127,1) 100%);
-  background: linear-gradient(45deg, rgba(59,173,227,1) 0%, rgba(87,111,230,1) 25%, rgba(152,68,183,1) 51%, rgba(255,53,127,1) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3bade3 ', endColorstr='#ff357f ', GradientType=1 );
-  height: 2px;
-}
-
-input[type=range]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  border: 2px solid;
-  border-radius: 50%;
-  height: 25px;
-  width: 25px;
-  max-width: 80px;
-  position: relative;
-  bottom: 11px;
-  background-color: #1d1c25;
-  cursor: -webkit-grab;
-
-  -webkit-transition: border 1000ms ease;
-  transition: border 1000ms ease;
-}
-
-input[type=range]::-moz-range-thumb {
-  -moz-appearance: none;
-  border: 2px solid;
-  border-radius: 50%;
-  height: 25px;
-  width: 25px;
-  max-width: 80px;
-  position: relative;
-  bottom: 11px;
-  background-color: #1d1c25;
-  cursor: -moz-grab;
-  -moz-transition: border 1000ms ease;
-  transition: border 1000ms ease;
-}
-
-
-
-.range.blue::-webkit-slider-thumb {
-   border-color: rgb(59,173,227);
-}
-
-.range.ltpurple::-webkit-slider-thumb {
-   border-color: rgb(87,111,230);
-}
-
-.range.purple::-webkit-slider-thumb {
-   border-color: rgb(152,68,183);
-}
-
-.range.pink::-webkit-slider-thumb {
-   border-color: rgb(255,53,127);
-}
-
-.range.blue::-moz-range-thumb {
-   border-color: rgb(59,173,227);
-}
-
-.range.ltpurple::-moz-range-thumb {
-   border-color: rgb(87,111,230);
-}
-
-.range.purple::-moz-range-thumb {
-   border-color: rgb(152,68,183);
-}
-
-.range.pink::-moz-range-thumb {
-   border-color: rgb(255,53,127);
-}
-
-input[type=range]::-webkit-slider-thumb:active {
-  cursor: -webkit-grabbing;
-}
-
-input[type=range]::-moz-range-thumb:active {
-  cursor: -moz-grabbing;
-}
-
-    #durationValue {
-      font-size: 30px;
-      font-weight: bold;
-    }
-
-    #rootNoteSelect {
-      margin-top: 20px;
-      font-size: 30px;
-    }
-label {
-  font-size: 30px;
-}
-    #scaleSelect {
-      margin-top: 10px;
-    }
-
-    select {
-      font-size: 30px;
-      padding: 6px;
-      border-radius: 4px;
-      border: 0px solid #000000;
-      background-color: #COCIFF;
-      color: #5C5BEE;
-      font-family: 'Cormorant Garamond', serif;            
-    }
-
-    select option {
-      background-color: #000000;
-    }
-    #generateButton {
-      background-color: #d0ff00;
-      font-size: 30px;
-      
-    }
-    #generateButton:hover {
-    background-color: #ffffff;
-      color: #5C5BEE;
-    }
-    #replayButton {
-      padding: 10px 20px;
-      font-size: 30px;
-      margin-top: 20px;
-      background-color: #D7E82B;
-      color: #000000;
-      border: none;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    #replayButton[disabled] {
-      background-color: #5C5BEE;
-      cursor: not-allowed;
-      border: 1px solid white;
-      color: #ffffff;
-    }
-
-    #replayButton:hover {
-      background-color: #ffffff;
-      color: #5C5BEE;
-    }
-  </style>
-</head>
-<body>
-  <h1>Tintinnabuli Melody Generator</h1>
-  <input type="range" id="durationSlider" min="0.2" max="10" step="0.1" value="0.4">
-  <div id="durationValue">Duration: 0.4 seconds</div>
-  <div>
-    <label for="rootNoteSelect">Root Note:</label>
-    <select id="rootNoteSelect">
-      <option value="C">C</option>
-      <option value="C#">C#</option>
-      <option value="Db">Db</option>
-      <option value="D">D</option>
-      <option value="D#">D#</option>
-      <option value="Eb">Eb</option>
-      <option value="E">E</option>
-      <option value="F">F</option>
-      <option value="F#">F#</option>
-      <option value="Gb">Gb</option>
-      <option value="G">G</option>
-      <option value="G#">G#</option>
-      <option value="Ab">Ab</option>
-      <option value="A">A</option>
-      <option value="A#">A#</option>
-      <option value="Bb">Bb</option>
-      <option value="B">B</option>
-    </select>
-  </div>
-  <div>
-    <label for="scaleSelect">Scale:</label>
-    <select id="scaleSelect">
-      <option value="major">Major</option>
-      <option value="minor">Minor</option>
-      <option value="dorian">Dorian</option>
-      <option value="lydian">Lydian</option>
-      <option value="mixolydian">Mixolydian</option>
-      <option value="phrygian">Phrygian</option>
-      <option value="pentatonic">Pentatonic</option>
-    </select>
-  </div>
-  <button id="generateButton">Generate Melody</button>  
-  <div id="melodyDisplay"></div>
-  <br/>  
-  <button id="replayButton" disabled>Replay Melody</button>
-
-  <script>
-    let melody = []; // Global variable to store the generated melody
-    let rootNote = "C"; // Default root note
-    let scaleType = "major"; // Default scale type
-
-    // Function to generate a random note within the selected scale based on the tonic note
-    function getRandomNote() {
-      const majorScaleIntervals = [0, 2, 4, 5, 7, 9, 11];
-      const minorScaleIntervals = [0, 2, 3, 5, 7, 8, 10];
-      const dorianScaleIntervals = [0, 2, 3, 5, 7, 9, 10];
-      const lydianScaleIntervals = [0, 2, 4, 6, 7, 9, 11];
-      const mixolydianScaleIntervals = [0, 2, 4, 5, 7, 9, 10];
-      const phrygianScaleIntervals = [0, 1, 3, 5, 7, 8, 10];
-      const pentatonicScaleIntervals = [0, 2, 4, 7, 9];
-
-      let scaleIntervals;
-
-      switch (scaleType) {
-        case "major":
-          scaleIntervals = majorScaleIntervals;
-          break;
-        case "minor":
-          scaleIntervals = minorScaleIntervals;
-          break;
-        case "dorian":
-          scaleIntervals = dorianScaleIntervals;
-          break;
-        case "lydian":
-          scaleIntervals = lydianScaleIntervals;
-          break;
-        case "mixolydian":
-          scaleIntervals = mixolydianScaleIntervals;
-          break;
-        case "phrygian":
-          scaleIntervals = phrygianScaleIntervals;
-          break;
-        case "pentatonic":
-          scaleIntervals = pentatonicScaleIntervals;
-          break;
-        default:
-          scaleIntervals = majorScaleIntervals;
+  <head>
+    <title>Tintinnabuli Melody Generator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background-color: #5c5bee;
+        font-family: "Cormorant Garamond", serif;
+        text-align: center;
+        font-weight: 300;
+        margin: 20px;
+        color: #ffffff;
       }
 
-      const tonicIndex = scaleIntervals[0] + noteToIndex(rootNote); // Tonic note index in the selected scale
-      const randomIndex = scaleIntervals[Math.floor(Math.random() * scaleIntervals.length)]; // Random index within the selected scale intervals
-      const noteIndex = (tonicIndex + randomIndex) % 12; // Adjust the index within the 12-note range
-      return indexToNote(noteIndex);
-    }
-
-    // Function to convert a note to its corresponding index (C: 0, C#: 1, D: 2, and so on)
-    function noteToIndex(note) {
-      const noteMap = {
-        "C": 0,
-        "C#": 1,
-        "Db": 1,
-        "D": 2,
-        "D#": 3,
-        "Eb": 3,
-        "E": 4,
-        "F": 5,
-        "F#": 6,
-        "Gb": 6,
-        "G": 7,
-        "G#": 8,
-        "Ab": 8,
-        "A": 9,
-        "A#": 10,
-        "Bb": 10,
-        "B": 11
-      };
-      return noteMap[note];
-    }
-
-    // Function to convert an index to its corresponding note (0: C, 1: C#, 2: D, and so on)
-    function indexToNote(index) {
-      const indexMap = {
-        0: "C",
-        1: "C#",
-        2: "D",
-        3: "D#",
-        4: "E",
-        5: "F",
-        6: "F#",
-        7: "G",
-        8: "G#",
-        9: "A",
-        10: "A#",
-        11: "B"
-      };
-      return indexMap[index];
-    }
-
-    // Function to generate a melody based on the tintinnabuli method
-    function generateMelody() {
-      const melodyLength = 8; // Number of notes in the melody
-      let generatedMelody = [];
-      for (let i = 0; i < melodyLength; i++) {
-        const melodyNote = getRandomNote();
-        const tonicNote = getRandomNote();
-        generatedMelody.push({ melodyNote, tonicNote });
+      h1 {
+        margin-top: 30px;
+        font-size: 7vw;
+        font-weight: 300;
+        margin: 0vw 13vw;
+        letter-spacing: -0.03rem;
+        line-height: 100%;
       }
-      return generatedMelody;
-    }
 
-    // Function to play the generated melody
-    function playMelody() {
-      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      button {
+        padding: 10px 20px;
+        font-size: 24px;
+        margin: 20px;
+        background-color: #a9ad93;
+        color: #000000;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        font-family: "Cormorant Garamond", serif;
+      }
 
-      const leftHand = audioContext.createGain();
-      const rightHand = audioContext.createGain();
+      button:hover {
+        color: #a9ad93;
+      }
 
-      leftHand.connect(audioContext.destination);
-      rightHand.connect(audioContext.destination);
+      #melodyDisplay {
+        margin-top: 20px;
+        font-size: 5vw;
+        font-weight: bold;
+        background: #c0c1ff;
+        border-radius: 80px;
+        color: #303030;
+        padding: 20px 30px;
+      }
 
-      const durationSlider = document.getElementById("durationSlider");
-      const noteDuration = parseFloat(durationSlider.value);
+      #durationSlider {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        width: 50%;
+        margin: 50px auto;
+      }
 
-      melody.forEach((note, index) => {
-        const startTime = index * noteDuration; // Delay each note by the specified duration
+      .range {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 200px;
+        margin-top: 10px;
+        transform: translate(-50%, -50%);
+      }
 
-        const leftOscillator = audioContext.createOscillator();
-        leftOscillator.type = "sine";
-        leftOscillator.frequency.value = noteToFrequency(note.melodyNote) / 2; // Lower the frequency of left hand notes by one octave
-        leftOscillator.connect(leftHand);
+      input[type="range"]::-webkit-slider-runnable-track {
+        -webkit-appearance: none;
+        background: rgba(59, 173, 227, 1);
+        background: -moz-linear-gradient(
+          45deg,
+          rgba(59, 173, 227, 1) 0%,
+          rgba(87, 111, 230, 1) 25%,
+          rgba(152, 68, 183, 1) 51%,
+          rgba(255, 53, 127, 1) 100%
+        );
+        background: -webkit-gradient(
+          left bottom,
+          right top,
+          color-stop(0%, rgba(59, 173, 227, 1)),
+          color-stop(25%, rgba(87, 111, 230, 1)),
+          color-stop(51%, rgba(152, 68, 183, 1)),
+          color-stop(100%, rgba(255, 53, 127, 1))
+        );
+        background: -webkit-linear-gradient(
+          45deg,
+          rgba(59, 173, 227, 1) 0%,
+          rgba(87, 111, 230, 1) 25%,
+          rgba(152, 68, 183, 1) 51%,
+          rgba(255, 53, 127, 1) 100%
+        );
+        background: -o-linear-gradient(
+          45deg,
+          rgba(59, 173, 227, 1) 0%,
+          rgba(87, 111, 230, 1) 25%,
+          rgba(152, 68, 183, 1) 51%,
+          rgba(255, 53, 127, 1) 100%
+        );
+        background: -ms-linear-gradient(
+          45deg,
+          rgba(59, 173, 227, 1) 0%,
+          rgba(87, 111, 230, 1) 25%,
+          rgba(152, 68, 183, 1) 51%,
+          rgba(255, 53, 127, 1) 100%
+        );
+        background: linear-gradient(
+          45deg,
+          rgba(59, 173, 227, 1) 0%,
+          rgba(87, 111, 230, 1) 25%,
+          rgba(152, 68, 183, 1) 51%,
+          rgba(255, 53, 127, 1) 100%
+        );
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3bade3 ', endColorstr='#ff357f ', GradientType=1 );
+        height: 2px;
+      }
 
-        const rightOscillator = audioContext.createOscillator();
-        rightOscillator.type = "sine";
-        rightOscillator.frequency.value = noteToFrequency(note.tonicNote);
-        rightOscillator.connect(rightHand);
+      input[type="range"]:focus {
+        outline: none;
+      }
 
-        leftOscillator.start(startTime);
-        leftOscillator.stop(startTime + noteDuration); // Play each note for the specified duration
+      input[type="range"]::-moz-range-track {
+        -moz-appearance: none;
+        background: rgba(59, 173, 227, 1);
+        background: -moz-linear-gradient(
+          45deg,
+          rgba(59, 173, 227, 1) 0%,
+          rgba(87, 111, 230, 1) 25%,
+          rgba(152, 68, 183, 1) 51%,
+          rgba(255, 53, 127, 1) 100%
+        );
+        background: -webkit-gradient(
+          left bottom,
+          right top,
+          color-stop(0%, rgba(59, 173, 227, 1)),
+          color-stop(25%, rgba(87, 111, 230, 1)),
+          color-stop(51%, rgba(152, 68, 183, 1)),
+          color-stop(100%, rgba(255, 53, 127, 1))
+        );
+        background: -webkit-linear-gradient(
+          45deg,
+          rgba(59, 173, 227, 1) 0%,
+          rgba(87, 111, 230, 1) 25%,
+          rgba(152, 68, 183, 1) 51%,
+          rgba(255, 53, 127, 1) 100%
+        );
+        background: -o-linear-gradient(
+          45deg,
+          rgba(59, 173, 227, 1) 0%,
+          rgba(87, 111, 230, 1) 25%,
+          rgba(152, 68, 183, 1) 51%,
+          rgba(255, 53, 127, 1) 100%
+        );
+        background: -ms-linear-gradient(
+          45deg,
+          rgba(59, 173, 227, 1) 0%,
+          rgba(87, 111, 230, 1) 25%,
+          rgba(152, 68, 183, 1) 51%,
+          rgba(255, 53, 127, 1) 100%
+        );
+        background: linear-gradient(
+          45deg,
+          rgba(59, 173, 227, 1) 0%,
+          rgba(87, 111, 230, 1) 25%,
+          rgba(152, 68, 183, 1) 51%,
+          rgba(255, 53, 127, 1) 100%
+        );
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3bade3 ', endColorstr='#ff357f ', GradientType=1 );
+        height: 2px;
+      }
 
-        rightOscillator.start(startTime);
-        rightOscillator.stop(startTime + noteDuration); // Play each note for the specified duration
-      });
+      input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        border: 2px solid;
+        border-radius: 50%;
+        height: 25px;
+        width: 25px;
+        max-width: 80px;
+        position: relative;
+        bottom: 11px;
+        background-color: #1d1c25;
+        cursor: -webkit-grab;
 
-      // Adjust the gain values to control volume
-      leftHand.gain.value = 0.3; // Adjust this value to control the volume of the left hand notes
-      rightHand.gain.value = 0.3; // Adjust this value to control the volume of the right hand notes
-    }
+        -webkit-transition: border 1000ms ease;
+        transition: border 1000ms ease;
+      }
 
-    // Function to convert a note to its corresponding frequency
-    function noteToFrequency(note) {
-      const noteMap = {
-        "C": 261.63,
-        "C#": 277.18,
-        "Db": 277.18,
-        "D": 293.66,
-        "D#": 311.13,
-        "Eb": 311.13,
-        "E": 329.63,
-        "F": 349.23,
-        "F#": 369.99,
-        "Gb": 369.99,
-        "G": 392.00,
-        "G#": 415.30,
-        "Ab": 415.30,
-        "A": 440.00,
-        "A#": 466.16,
-        "Bb": 466.16,
-        "B": 493.88
-      };
-      return noteMap[note];
-    }
+      input[type="range"]::-moz-range-thumb {
+        -moz-appearance: none;
+        border: 2px solid;
+        border-radius: 50%;
+        height: 25px;
+        width: 25px;
+        max-width: 80px;
+        position: relative;
+        bottom: 11px;
+        background-color: #1d1c25;
+        cursor: -moz-grab;
+        -moz-transition: border 1000ms ease;
+        transition: border 1000ms ease;
+      }
 
-    // Function to display the generated melody on the webpage and play it
-    function displayMelody() {
-      const melodyDisplay = document.getElementById("melodyDisplay");
-      rootNote = document.getElementById("rootNoteSelect").value;
-      scaleType = document.getElementById("scaleSelect").value;
-      melody = generateMelody();
-      melodyDisplay.textContent = melody.map(note => note.melodyNote + (note.tonicNote ? "(" + note.tonicNote + ")" : "") + " ").join("");
-      document.getElementById("replayButton").disabled = false;
-      playMelody();
-    }
+      .range.blue::-webkit-slider-thumb {
+        border-color: rgb(59, 173, 227);
+      }
 
-    // Function to replay the generated melody
-    function replayMelody() {
-      if (melody.length > 0) {
+      .range.ltpurple::-webkit-slider-thumb {
+        border-color: rgb(87, 111, 230);
+      }
+
+      .range.purple::-webkit-slider-thumb {
+        border-color: rgb(152, 68, 183);
+      }
+
+      .range.pink::-webkit-slider-thumb {
+        border-color: rgb(255, 53, 127);
+      }
+
+      .range.blue::-moz-range-thumb {
+        border-color: rgb(59, 173, 227);
+      }
+
+      .range.ltpurple::-moz-range-thumb {
+        border-color: rgb(87, 111, 230);
+      }
+
+      .range.purple::-moz-range-thumb {
+        border-color: rgb(152, 68, 183);
+      }
+
+      .range.pink::-moz-range-thumb {
+        border-color: rgb(255, 53, 127);
+      }
+
+      input[type="range"]::-webkit-slider-thumb:active {
+        cursor: -webkit-grabbing;
+      }
+
+      input[type="range"]::-moz-range-thumb:active {
+        cursor: -moz-grabbing;
+      }
+
+      #durationValue {
+        font-size: 30px;
+        font-weight: bold;
+      }
+
+      #rootNoteSelect {
+        margin-top: 20px;
+        font-size: 30px;
+      }
+      label {
+        font-size: 30px;
+      }
+      #scaleSelect {
+        margin-top: 10px;
+      }
+
+      select {
+        font-size: 30px;
+        padding: 6px;
+        border-radius: 4px;
+        border: 0px solid #000000;
+        background-color: #COCIFF;
+        color: #5c5bee;
+        font-family: "Cormorant Garamond", serif;
+      }
+
+      select option {
+        background-color: #000000;
+      }
+      #generateButton {
+        background-color: #d0ff00;
+        font-size: 30px;
+      }
+      #generateButton:hover {
+        background-color: #ffffff;
+        color: #5c5bee;
+      }
+      #replayButton {
+        padding: 10px 20px;
+        font-size: 30px;
+        margin-top: 20px;
+        background-color: #d7e82b;
+        color: #000000;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      #replayButton[disabled] {
+        background-color: #5c5bee;
+        cursor: not-allowed;
+        border: 1px solid white;
+        color: #ffffff;
+      }
+
+      #replayButton:hover {
+        background-color: #ffffff;
+        color: #5c5bee;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Tintinnabuli Melody Generator</h1>
+    <input
+      type="range"
+      id="durationSlider"
+      min="0.2"
+      max="10"
+      step="0.1"
+      value="0.4"
+    />
+    <div id="durationValue">Duration: 0.4 seconds</div>
+    <div>
+      <label for="rootNoteSelect">Root Note:</label>
+      <select id="rootNoteSelect">
+        <option value="C">C</option>
+        <option value="C#">C#</option>
+        <option value="Db">Db</option>
+        <option value="D">D</option>
+        <option value="D#">D#</option>
+        <option value="Eb">Eb</option>
+        <option value="E">E</option>
+        <option value="F">F</option>
+        <option value="F#">F#</option>
+        <option value="Gb">Gb</option>
+        <option value="G">G</option>
+        <option value="G#">G#</option>
+        <option value="Ab">Ab</option>
+        <option value="A">A</option>
+        <option value="A#">A#</option>
+        <option value="Bb">Bb</option>
+        <option value="B">B</option>
+      </select>
+    </div>
+    <div>
+      <label for="scaleSelect">Scale:</label>
+      <select id="scaleSelect">
+        <option value="major">Major</option>
+        <option value="minor">Minor</option>
+        <option value="dorian">Dorian</option>
+        <option value="lydian">Lydian</option>
+        <option value="mixolydian">Mixolydian</option>
+        <option value="phrygian">Phrygian</option>
+        <option value="pentatonic">Pentatonic</option>
+      </select>
+    </div>
+    <button id="generateButton">Generate Melody</button>
+    <div id="melodyDisplay"></div>
+    <br />
+    <button id="replayButton" disabled>Replay Melody</button>
+
+    <script>
+      let melody = []; // Global variable to store the generated melody
+      let rootNote = "C"; // Default root note
+      let scaleType = "major"; // Default scale type
+
+      // Function to generate a random note within the selected scale based on the tonic note
+      function getRandomNote() {
+        const majorScaleIntervals = [0, 2, 4, 5, 7, 9, 11];
+        const minorScaleIntervals = [0, 2, 3, 5, 7, 8, 10];
+        const dorianScaleIntervals = [0, 2, 3, 5, 7, 9, 10];
+        const lydianScaleIntervals = [0, 2, 4, 6, 7, 9, 11];
+        const mixolydianScaleIntervals = [0, 2, 4, 5, 7, 9, 10];
+        const phrygianScaleIntervals = [0, 1, 3, 5, 7, 8, 10];
+        const pentatonicScaleIntervals = [0, 2, 4, 7, 9];
+
+        let scaleIntervals;
+
+        switch (scaleType) {
+          case "major":
+            scaleIntervals = majorScaleIntervals;
+            break;
+          case "minor":
+            scaleIntervals = minorScaleIntervals;
+            break;
+          case "dorian":
+            scaleIntervals = dorianScaleIntervals;
+            break;
+          case "lydian":
+            scaleIntervals = lydianScaleIntervals;
+            break;
+          case "mixolydian":
+            scaleIntervals = mixolydianScaleIntervals;
+            break;
+          case "phrygian":
+            scaleIntervals = phrygianScaleIntervals;
+            break;
+          case "pentatonic":
+            scaleIntervals = pentatonicScaleIntervals;
+            break;
+          default:
+            scaleIntervals = majorScaleIntervals;
+        }
+
+        const tonicIndex = scaleIntervals[0] + noteToIndex(rootNote); // Tonic note index in the selected scale
+        const randomIndex =
+          scaleIntervals[Math.floor(Math.random() * scaleIntervals.length)]; // Random index within the selected scale intervals
+        const noteIndex = (tonicIndex + randomIndex) % 12; // Adjust the index within the 12-note range
+        return indexToNote(noteIndex);
+      }
+
+      // Function to convert a note to its corresponding index (C: 0, C#: 1, D: 2, and so on)
+      function noteToIndex(note) {
+        const noteMap = {
+          C: 0,
+          "C#": 1,
+          Db: 1,
+          D: 2,
+          "D#": 3,
+          Eb: 3,
+          E: 4,
+          F: 5,
+          "F#": 6,
+          Gb: 6,
+          G: 7,
+          "G#": 8,
+          Ab: 8,
+          A: 9,
+          "A#": 10,
+          Bb: 10,
+          B: 11,
+        };
+        return noteMap[note];
+      }
+
+      // Function to convert an index to its corresponding note (0: C, 1: C#, 2: D, and so on)
+      function indexToNote(index) {
+        const indexMap = {
+          0: "C",
+          1: "C#",
+          2: "D",
+          3: "D#",
+          4: "E",
+          5: "F",
+          6: "F#",
+          7: "G",
+          8: "G#",
+          9: "A",
+          10: "A#",
+          11: "B",
+        };
+        return indexMap[index];
+      }
+
+      // Function to generate a melody based on the tintinnabuli method
+      function generateMelody() {
+        const melodyLength = 8; // Number of notes in the melody
+        let generatedMelody = [];
+        for (let i = 0; i < melodyLength; i++) {
+          const melodyNote = getRandomNote();
+          const tonicNote = getRandomNote();
+          generatedMelody.push({ melodyNote, tonicNote });
+        }
+        return generatedMelody;
+      }
+
+      // Function to play the generated melody
+      function playMelody() {
+        const audioContext = new (window.AudioContext ||
+          window.webkitAudioContext)();
+
+        const leftHand = audioContext.createGain();
+        const rightHand = audioContext.createGain();
+
+        leftHand.connect(audioContext.destination);
+        rightHand.connect(audioContext.destination);
+
+        const durationSlider = document.getElementById("durationSlider");
+        const noteDuration = parseFloat(durationSlider.value);
+
+        melody.forEach((note, index) => {
+          const startTime = index * noteDuration; // Delay each note by the specified duration
+
+          const leftOscillator = audioContext.createOscillator();
+          leftOscillator.type = "square";
+          leftOscillator.frequency.value = noteToFrequency(note.melodyNote) / 2; // Lower the frequency of left hand notes by one octave
+          leftOscillator.connect(leftHand);
+
+          const rightOscillator = audioContext.createOscillator();
+          rightOscillator.type = "triangle";
+          rightOscillator.frequency.value = noteToFrequency(note.tonicNote);
+          rightOscillator.connect(rightHand);
+
+          leftOscillator.start(startTime);
+          leftOscillator.stop(startTime + noteDuration); // Play each note for the specified duration
+
+          rightOscillator.start(startTime);
+          rightOscillator.stop(startTime + noteDuration); // Play each note for the specified duration
+        });
+
+        // Adjust the gain values to control volume
+        leftHand.gain.value = 0.3; // Adjust this value to control the volume of the left hand notes
+        rightHand.gain.value = 0.3; // Adjust this value to control the volume of the right hand notes
+      }
+
+      // Function to convert a note to its corresponding frequency
+      function noteToFrequency(note) {
+        const noteMap = {
+          C: 261.63,
+          "C#": 277.18,
+          Db: 277.18,
+          D: 293.66,
+          "D#": 311.13,
+          Eb: 311.13,
+          E: 329.63,
+          F: 349.23,
+          "F#": 369.99,
+          Gb: 369.99,
+          G: 392.0,
+          "G#": 415.3,
+          Ab: 415.3,
+          A: 440.0,
+          "A#": 466.16,
+          Bb: 466.16,
+          B: 493.88,
+        };
+        return noteMap[note];
+      }
+
+      // Function to display the generated melody on the webpage and play it
+      function displayMelody() {
+        const melodyDisplay = document.getElementById("melodyDisplay");
+        rootNote = document.getElementById("rootNoteSelect").value;
+        scaleType = document.getElementById("scaleSelect").value;
+        melody = generateMelody();
+        melodyDisplay.textContent = melody
+          .map(
+            (note) =>
+              note.melodyNote +
+              (note.tonicNote ? "(" + note.tonicNote + ")" : "") +
+              " "
+          )
+          .join("");
+        document.getElementById("replayButton").disabled = false;
         playMelody();
       }
-    }
 
-    // Function to update the duration value display
-    function updateDurationValue() {
+      // Function to replay the generated melody
+      function replayMelody() {
+        if (melody.length > 0) {
+          playMelody();
+        }
+      }
+
+      // Function to update the duration value display
+      function updateDurationValue() {
+        const durationSlider = document.getElementById("durationSlider");
+        const durationValue = document.getElementById("durationValue");
+        const duration = parseFloat(durationSlider.value).toFixed(1);
+        durationValue.textContent = `Duration: ${duration} seconds`;
+      }
+
+      // Event listener for the generate button
+      const generateButton = document.getElementById("generateButton");
+      generateButton.addEventListener("click", displayMelody);
+
+      // Event listener for the replay button
+      const replayButton = document.getElementById("replayButton");
+      replayButton.addEventListener("click", replayMelody);
+
+      // Event listener for the duration slider
       const durationSlider = document.getElementById("durationSlider");
-      const durationValue = document.getElementById("durationValue");
-      const duration = parseFloat(durationSlider.value).toFixed(1);
-      durationValue.textContent = `Duration: ${duration} seconds`;
-    }
+      durationSlider.addEventListener("input", updateDurationValue);
 
-    // Event listener for the generate button
-    const generateButton = document.getElementById("generateButton");
-    generateButton.addEventListener("click", displayMelody);
+      var inputRange = document.getElementsByClassName("range")[0],
+        maxValue = 100, // the higher the smoother when dragging
+        speed = 5,
+        currValue,
+        rafID;
 
-    // Event listener for the replay button
-    const replayButton = document.getElementById("replayButton");
-    replayButton.addEventListener("click", replayMelody);
+      // set min/max value
+      inputRange.min = 0;
+      inputRange.max = maxValue;
 
-    // Event listener for the duration slider
-    const durationSlider = document.getElementById("durationSlider");
-    durationSlider.addEventListener("input", updateDurationValue);
+      // listen for unlock
+      function unlockStartHandler() {
+        // clear raf if trying again
+        window.cancelAnimationFrame(rafID);
 
-    
+        // set to desired value
+        currValue = +this.value;
+      }
 
-    var inputRange = document.getElementsByClassName('range')[0],
-    maxValue = 100, // the higher the smoother when dragging
-    speed = 5,
-    currValue, rafID;
+      function unlockEndHandler() {
+        // store current value
+        currValue = +this.value;
 
-// set min/max value
-inputRange.min = 0;
-inputRange.max = maxValue;
+        // determine if we have reached success or not
+        if (currValue >= maxValue) {
+          successHandler();
+        } else {
+          rafID = window.requestAnimationFrame(animateHandler);
+        }
+      }
 
-// listen for unlock
-function unlockStartHandler() {
-    // clear raf if trying again
-    window.cancelAnimationFrame(rafID);
-    
-    // set to desired value
-    currValue = +this.value;
-}
+      // handle range animation
+      function animateHandler() {
+        // calculate gradient transition
+        var transX = currValue - maxValue;
 
-function unlockEndHandler() {
-    
-    // store current value
-    currValue = +this.value;
-    
-    // determine if we have reached success or not
-    if(currValue >= maxValue) {
-        successHandler();
-    }
-    else {
-        rafID = window.requestAnimationFrame(animateHandler);
-    }
-}
+        // update input range
+        inputRange.value = currValue;
 
-// handle range animation
-function animateHandler() {
+        //Change slide thumb color on mouse up
+        if (currValue < 20) {
+          inputRange.classList.remove("ltpurple");
+        }
+        if (currValue < 40) {
+          inputRange.classList.remove("purple");
+        }
+        if (currValue < 60) {
+          inputRange.classList.remove("pink");
+        }
 
-    // calculate gradient transition
-    var transX = currValue - maxValue;
-    
-    // update input range
-    inputRange.value = currValue;
+        // determine if we need to continue
+        if (currValue > -1) {
+          window.requestAnimationFrame(animateHandler);
+        }
 
-    //Change slide thumb color on mouse up
-    if (currValue < 20) {
-        inputRange.classList.remove('ltpurple');
-    }
-    if (currValue < 40) {
-        inputRange.classList.remove('purple');
-    }
-    if (currValue < 60) {
-        inputRange.classList.remove('pink');
-    }
-    
-    // determine if we need to continue
-    if(currValue > -1) {
-      window.requestAnimationFrame(animateHandler);   
-    }
-    
-    // decrement value
-    currValue = currValue - speed;
-}
+        // decrement value
+        currValue = currValue - speed;
+      }
 
-// handle successful unlock
-function successHandler() {
-  alert('Unlocked');
-};
+      // handle successful unlock
+      function successHandler() {
+        alert("Unlocked");
+      }
 
-// bind events
-inputRange.addEventListener('mousedown', unlockStartHandler, false);
-inputRange.addEventListener('mousestart', unlockStartHandler, false);
-inputRange.addEventListener('mouseup', unlockEndHandler, false);
-inputRange.addEventListener('touchend', unlockEndHandler, false);
+      // bind events
+      inputRange.addEventListener("mousedown", unlockStartHandler, false);
+      inputRange.addEventListener("mousestart", unlockStartHandler, false);
+      inputRange.addEventListener("mouseup", unlockEndHandler, false);
+      inputRange.addEventListener("touchend", unlockEndHandler, false);
 
-// move gradient
-inputRange.addEventListener('input', function() {
-    //Change slide thumb color on way up
-    if (this.value > 20) {
-        inputRange.classList.add('ltpurple');
-    }
-    if (this.value > 40) {
-        inputRange.classList.add('purple');
-    }
-    if (this.value > 60) {
-        inputRange.classList.add('pink');
-    }
+      // move gradient
+      inputRange.addEventListener("input", function () {
+        //Change slide thumb color on way up
+        if (this.value > 20) {
+          inputRange.classList.add("ltpurple");
+        }
+        if (this.value > 40) {
+          inputRange.classList.add("purple");
+        }
+        if (this.value > 60) {
+          inputRange.classList.add("pink");
+        }
 
-    //Change slide thumb color on way down
-    if (this.value < 20) {
-        inputRange.classList.remove('ltpurple');
-    }
-    if (this.value < 40) {
-        inputRange.classList.remove('purple');
-    }
-    if (this.value < 60) {
-        inputRange.classList.remove('pink');
-    }
-});
-  </script>
-</body>
+        //Change slide thumb color on way down
+        if (this.value < 20) {
+          inputRange.classList.remove("ltpurple");
+        }
+        if (this.value < 40) {
+          inputRange.classList.remove("purple");
+        }
+        if (this.value < 60) {
+          inputRange.classList.remove("pink");
+        }
+      });
+    </script>
+  </body>
 </html>
