@@ -22,19 +22,19 @@
         margin-top: 30px;
         font-size: 7vw;
         font-weight: 300;
-        margin: 0vw 13vw;
+        margin: 30px 30px;
         letter-spacing: -0.03rem;
         line-height: 100%;
       }
 
       button {
-        padding: 10px 20px;
+        padding: 15px 30px;
         font-size: 24px;
         margin: 20px;
         background-color: #a9ad93;
         color: #000000;
         border: none;
-        border-radius: 30px;
+        border-radius: 100px;
         cursor: pointer;
         transition: background-color 0.3s ease;
         font-family: "Cormorant Garamond", serif;
@@ -45,11 +45,11 @@
       }
 
       #melodyDisplay {
-        margin: 20px 20vw;
-        font-size: 5vw;
+        padding: 0 10vw;
+        font-size: 70px;
         font-weight: bold;
         background: #d0ff00;
-        border-radius: 80px;
+        border-radius: 30px;
         color: #5c5bee;
         padding: 20px 30px;
       }
@@ -246,7 +246,21 @@
       input[type="range"]::-moz-range-thumb:active {
         cursor: -moz-grabbing;
       }
-
+      .container {
+        border: 2px solid white;
+        border-radius: 30px;
+        display: flex;
+        padding: 20px;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: center;
+        align-items: baseline;
+        align-content: stretch;
+      }
+      .item {
+        flex: 1 0 auto;
+        margin: 10px 10px;
+      }
       #durationValue {
         font-size: 30px;
         font-weight: bold;
@@ -286,9 +300,9 @@
       }
       #replayButton {
         padding: 10px 20px;
+        background-color: #d0ff00;
         font-size: 30px;
         margin-top: 20px;
-        background-color: #d7e82b;
         color: #000000;
         border: none;
         cursor: pointer;
@@ -309,70 +323,124 @@
 
       /*iPhone 14*/
       @media only screen and (width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) {
+        #durationValue,
+        #rootNoteSelect,
+        label,
+        #scaleSelect,
+        #melodyDisplay,
+        #generateButton,
+        #replayButton {
+          font-size: 50px;
+        }
         #melodyDisplay {
-          font-size: 8vw;
+          margin: 10px 10vw;
+        }
+        h1 {
+        margin-top: 30px;
+        font-size: 80px;
+        font-weight: 500;
+        margin: 30px 30px;
+        letter-spacing: -0.03rem;
+        line-height: 100%;
         }
       }
 
       /*iPhone 14 Pro*/
       @media only screen and (width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) {
+        #durationValue,
+        #rootNoteSelect,
+        label,
+        #scaleSelect,
+        #melodyDisplay,
+        #generateButton,
+        #replayButton {
+          font-size: 50px;
+        }
         #melodyDisplay {
-          font-size: 8vw;
+          margin: 10px 10vw;
+        }
+        h1 {
+        margin-top: 30px;
+        font-size: 80px;
+        font-weight: 500;
+        margin: 30px 30px;
+        letter-spacing: -0.03rem;
+        line-height: 100%;
         }
       }
 
       /*iPhone 14 Pro Max*/
       @media only screen and (device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) {
+        #durationValue,
+        #rootNoteSelect,
+        label,
+        #scaleSelect,
+        #melodyDisplay,
+        #generateButton,
+        #replayButton {
+          font-size: 50px;
+        }
         #melodyDisplay {
-          font-size: 8vw;
+          margin: 10px 10vw;
+        }
+        h1 {
+        margin-top: 30px;
+        font-size: 80px;
+        font-weight: 500;
+        margin: 30px 30px;
+        letter-spacing: -0.03rem;
+        line-height: 100%;
         }
       }
     </style>
   </head>
   <body>
     <h1>Tintinnabuli Melody Generator</h1>
-    <input
-      type="range"
-      id="durationSlider"
-      min="0.2"
-      max="10"
-      step="0.1"
-      value="0.4"
-    />
-    <div id="durationValue">Duration: 0.4 seconds</div>
-    <div>
-      <label for="rootNoteSelect">Root Note:</label>
-      <select id="rootNoteSelect">
-        <option value="C">C</option>
-        <option value="C#">C#</option>
-        <option value="Db">Db</option>
-        <option value="D">D</option>
-        <option value="D#">D#</option>
-        <option value="Eb">Eb</option>
-        <option value="E">E</option>
-        <option value="F">F</option>
-        <option value="F#">F#</option>
-        <option value="Gb">Gb</option>
-        <option value="G">G</option>
-        <option value="G#">G#</option>
-        <option value="Ab">Ab</option>
-        <option value="A">A</option>
-        <option value="A#">A#</option>
-        <option value="Bb">Bb</option>
-        <option value="B">B</option>
-      </select>
-    </div>
-    <div>
-      <label for="scaleSelect">Scale:</label>
-      <select id="scaleSelect">
-        <option value="major">Major</option>
-        <option value="minor">Minor</option>
-        <option value="dorian">Dorian</option>
-        <option value="lydian">Lydian</option>
-        <option value="mixolydian">Mixolydian</option>
-        <option value="phrygian">Phrygian</option>
-        <option value="pentatonic">Pentatonic</option>
-      </select>
+    <div class="container ghost">
+      <input
+        type="range"
+        id="durationSlider"
+        min="0.2"
+        max="10"
+        step="0.1"
+        value="0.4"
+      />
+      <div class="item" id="durationValue">Duration: 0.4 seconds</div>
+      <br />
+      <div class="item">
+        <label for="rootNoteSelect">Root Note:</label>
+        <select id="rootNoteSelect">
+          <option value="C">C</option>
+          <option value="C#">C#</option>
+          <option value="Db">Db</option>
+          <option value="D">D</option>
+          <option value="D#">D#</option>
+          <option value="Eb">Eb</option>
+          <option value="E">E</option>
+          <option value="F">F</option>
+          <option value="F#">F#</option>
+          <option value="Gb">Gb</option>
+          <option value="G">G</option>
+          <option value="G#">G#</option>
+          <option value="Ab">Ab</option>
+          <option value="A">A</option>
+          <option value="A#">A#</option>
+          <option value="Bb">Bb</option>
+          <option value="B">B</option>
+        </select>
+      </div>
+      <div class="item">
+        <label for="scaleSelect">Scale:</label>
+        <select id="scaleSelect">
+          <option value="major">Major</option>
+          <option value="minor">Minor</option>
+          <option value="dorian">Dorian</option>
+          <option value="lydian">Lydian</option>
+          <option value="mixolydian">Mixolydian</option>
+          <option value="phrygian">Phrygian</option>
+          <option value="pentatonic">Pentatonic</option>
+        </select>
+      </div>
     </div>
     <button id="generateButton">Generate Melody</button>
     <div id="melodyDisplay"></div>
