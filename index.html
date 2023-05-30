@@ -61,8 +61,8 @@
       #durationSlider {
         -webkit-appearance: none;
         -moz-appearance: none;
-        width: 50%;
-        margin: 50px auto;
+        width: 90%;
+        margin: 40px auto 15px auto;
       }
 
       .range {
@@ -269,6 +269,7 @@
       #durationValue {
         font-size: 30px;
         font-weight: bold;
+        width: 90%;        
       }
 
       #rootNoteSelect {
@@ -298,17 +299,15 @@
       #generateButton {
         background-color: #d0ff00;
         font-size: 30px;
+        margin: 50px 0 20px 0;
       }
       #generateButton:hover {
         background-color: #ffffff;
         color: #5c5bee;
       }
       #replayButton {
-        padding: 10px 20px;
         background-color: #d0ff00;
-        font-size: 30px;
-        margin-top: 20px;
-        color: #000000;
+        font-size: 30px;        
         border: none;
         cursor: pointer;
         transition: background-color 0.3s ease;
@@ -461,7 +460,6 @@
     </div>
     <button id="generateButton">Generate Melody</button>
     <div id="melodyDisplay"></div>
-    <br />
     <button id="replayButton" disabled>Replay Melody</button>
 
     <script>
